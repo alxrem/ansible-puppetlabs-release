@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/alxrem/ansible-puppetlabs-release.svg?branch=master)](https://travis-ci.org/alxrem/ansible-puppetlabs-release)
+
 puppetlabs-release
 ==================
 
