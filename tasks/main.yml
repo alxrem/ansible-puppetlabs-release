@@ -3,6 +3,7 @@
   command: dpkg-query -f '${Package} ${Status}' -W puppetlabs-release
   register: release_package
   changed_when: not release_package.stdout.startswith("puppetlabs-release install ")
+  ignore_errors: yes
 
 - name: Download Puppetlabs release package
   shell: "wget http://apt.puppetlabs.com/{{ release_pkg }} -O {{ release_file }} && dpkg -i {{ release_file }} && rm -f {{ release_file }}"
