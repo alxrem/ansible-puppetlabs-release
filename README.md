@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/alxrem/ansible-puppetlabs-release.svg?branch=master)](https://travis-ci.org/alxrem/ansible-puppetlabs-release)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/6371.svg)](https://galaxy.ansible.com/detail#/role/6371)
 
 puppetlabs-release
 ==================
