@@ -3,15 +3,15 @@
 # vim: ts=4 sts=4 sw=4 et
 
 import unittest
-from subprocess import call, check_output, Popen, PIPE
+from subprocess import check_output
 import re
 
 
 class AnsibleTestCase(unittest.TestCase):
     RESULT_RE = re.compile(
-            r'(\w+)\s*:\s*'
-            r'ok=(\d+)\s+changed=(\d+)\s+unreachable=(\d+)\s+failed=(\d+)',
-            )
+        r'(\w+)\s*:\s*'
+        r'ok=(\d+)\s+changed=(\d+)\s+unreachable=(\d+)\s+failed=(\d+)',
+        )
 
     def setUp(self):
         check_output('vagrant up'.split())
@@ -26,18 +26,18 @@ class AnsibleTestCase(unittest.TestCase):
         for results in AnsibleTestCase.RESULT_RE.findall(stdout):
             self._ansible_results[results[0]] = dict(zip(
                 'ok changed unreachable failed'.split(),
-                [int(result) for result in results[1:]]))
+                [int(counter) for counter in results[1:]]))
 
     def assertAnsibleResults(self, **kwargs):
         for host, results in self._ansible_results.items():
-            for kind, result in results.items():
-                if kind not in kwargs:
+            for status, counter in results.items():
+                if status not in kwargs:
                     continue
-                expected = kwargs[kind]
+                expected = kwargs[status]
                 self.assertEqual(
-                        result, expected,
-                        'Expected {0} tasks were {1} on host {2}, '
-                        'got {3}'.format(expected, kind, host, result))
+                    counter, expected,
+                    'Expected {0} tasks were {1} on host {2}, '
+                    'got {3}'.format(expected, status, host, counter))
 
 
 class TestRole(AnsibleTestCase):
