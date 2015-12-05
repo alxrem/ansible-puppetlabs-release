@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+from subprocess import Popen, PIPE
+import re
+import json
+import sys
+
+
+SSH_CONFIG_RE = re.compile(r'^Host (\w+).*?'
+                           r'  HostName ([\d\.]+).*?'
+                           r'  User (\w+).*?'
+                           r'  Port (\d+).*?'
+                           r'  IdentityFile (\S+)',
+                           re.M | re.S)
+vagrant_ssh_config = Popen(['vagrant', 'ssh-config'], stdin=PIPE, stdout=PIPE)
+stdout, stderr = vagrant_ssh_config.communicate()
+
+hostvars = dict()
+for name, host, user, port, key in SSH_CONFIG_RE.findall(stdout):
+    hostvars[name] = {
+        'ansible_ssh_host': host,
+        'ansible_ssh_port': int(port),
+        'ansible_ssh_user': user,
+        'ansible_ssh_private_key_file': key,
+        'ansible_sudo': 'true',
+    }
+
+try:
+    if sys.argv[1] == '--list':
+        inventory = {
+            'all': {
+                'hosts': hostvars.keys()
+            },
+            '_meta': {
+                'hostvars': hostvars
+            }
+        }
+    elif sys.argv[1] == '--host':
+        inventory = hostvars[sys.argv[2]]
+    else:
+        inventory = dict()
+except (KeyError, IndexError):
+    inventory = dict()
+
+print(json.dumps(inventory))
