@@ -9,6 +9,12 @@ No parameters, no dependencies.
 
 Intended to use as dependency of other roles related to puppet.
 
+Supported platforms are
+- Debian wheezy
+- Debian jessie
+- Ubuntu precise (12.04 LTS)
+- Ubuntu trusty (14.04 LTS)
+
 Example playbook
 ----------------
 

@@ -1,5 +1,12 @@
 ---
-- name: Detect Puppetlabs release package
+- name: Define name of release package
+  include_vars: "{{ item }}"
+  with_first_found:
+  - ../vars/{{ ansible_distribution }}_{{ ansible_distribution_release }}.yml
+  - ../vars/{{ ansible_distribution }}.yml
+  - ../vars/default.yml
+
+- name: Check whether release package is installed
   command: dpkg-query -f '${Package} ${Status}' -W puppetlabs-release
   register: release_package
   failed_when: release_package.rc > 1

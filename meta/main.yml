@@ -9,5 +9,9 @@ galaxy_info:
     versions:
     - jessie
     - wheezy
+  - name: Ubuntu
+    versions:
+    - precise
+    - trusty
   categories:
   - system

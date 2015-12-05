@@ -1,3 +1,2 @@
 ---
 release_pkg: puppetlabs-release-wheezy.deb
-release_file: /tmp/{{ release_pkg }}

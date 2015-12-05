@@ -42,16 +42,16 @@ class AnsibleTestCase(unittest.TestCase):
 
 class TestRole(AnsibleTestCase):
     def test_install_package_on_clean_system(self):
-        self.assertAnsibleResults(ok=2, changed=2)
+        self.assertAnsibleResults(ok=4, changed=2)
 
     def test_idempotency(self):
         self.ansible_playbook('test.yml')
-        self.assertAnsibleResults(ok=1, changed=0)
+        self.assertAnsibleResults(ok=3, changed=0)
 
     def test_reinstall_package(self):
         self.ansible_playbook('remove_package.yml')
         self.ansible_playbook('test.yml')
-        self.assertAnsibleResults(ok=2, changed=2)
+        self.assertAnsibleResults(ok=4, changed=2)
 
 
 if __name__ == '__main__':
