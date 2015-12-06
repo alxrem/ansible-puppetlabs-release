@@ -12,3 +12,5 @@
   failed_when: release_package.rc > 1
   changed_when: not release_package.stdout.startswith("puppetlabs-release install ")
   notify: Install package
+
+- meta: flush_handlers
