@@ -1,5 +1,5 @@
 ---
 - hosts: all
   gather_facts: false
-  pre_tasks:
+  tasks:
   - apt: name=puppetlabs-release state=absent

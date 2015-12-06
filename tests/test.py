@@ -43,6 +43,8 @@ class AnsibleTestCase(unittest.TestCase):
 class TestRole(AnsibleTestCase):
     def test_install_package_on_clean_system(self):
         self.assertAnsibleResults(ok=4, changed=2)
+        self.ansible_playbook('check_repository.yml')
+        self.assertAnsibleResults(ok=2)
 
     def test_idempotency(self):
         self.ansible_playbook('test.yml')

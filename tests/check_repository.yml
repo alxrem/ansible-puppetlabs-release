@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: true
+  tasks:
+  - shell: grep '^deb http://apt\.puppetlabs\.com precise main$' /etc/apt/sources.list.d/puppetlabs.list
+    when: ansible_distribution_release == 'precise'
+  - shell: grep '^deb http://apt\.puppetlabs\.com trusty main$' /etc/apt/sources.list.d/puppetlabs.list
+    when: ansible_distribution_release == 'trusty'
+  - shell: grep '^deb http://apt\.puppetlabs\.com wheezy main$' /etc/apt/sources.list.d/puppetlabs.list
+    when: ansible_distribution_release == 'wheezy' or ansible_distribution_release == 'jessie'
